@@ -45,5 +45,3 @@ var lengthOfLongestSubstring = function (s) {
 
   return biggestLength;
 };
-
-console.log(lengthOfLongestSubstring('pwwkew'))
