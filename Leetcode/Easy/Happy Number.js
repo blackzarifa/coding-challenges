@@ -30,18 +30,33 @@ Constraints:
 1 <= n <= 2^31 - 1
 */
 
-var isHappy = function(n) {
-  let num = n;
-  const oldNums = [];
+// var isHappy = function (n) {
+//   let num = n;
+//   const oldNums = [];
 
-  while (num !== 1) {
-    oldNums.push(num);
-    const arr = Array.from(String(num), Number).map(x => Math.pow(x, 2));
-    num = arr.reduce((prev, curr) => prev + curr, 0);
-    
-    if (oldNums.some(x => x === num))
-      return false;
-  }
+//   while (num !== 1) {
+//     oldNums.push(num);
+//     const arr = Array.from(String(num), Number).map((x) => Math.pow(x, 2));
+//     num = arr.reduce((prev, curr) => prev + curr, 0);
 
-  return true;
+//     if (oldNums.some((x) => x === num)) return false;
+//   }
+
+//   return true;
+// };
+
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+var isHappy = function (n, set = new Set()) {
+  if (n === 1) return true;
+  if (set.has(n)) return false;
+
+  const arr = n.toString().split('');
+  const res = arr.reduce((acc, cur) => {
+    return (acc += Number.parseInt(cur) ** 2);
+  }, 0);
+
+  return isHappy(res, set.add(n));
 };
