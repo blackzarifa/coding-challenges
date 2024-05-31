@@ -28,12 +28,35 @@ t.length == s.length
 s and t consist of any valid ascii character.
 */
 
+// var isIsomorphic = function (s, t) {
+//   const hash = {};
+
+//   for (let i = 0; i < s.length; i++) {
+//     if (hash[t[i]] === undefined && !Object.values(hash).includes(s[i])) hash[t[i]] = s[i];
+//     else if (hash[t[i]] !== s[i]) return false;
+//   }
+
+//   return true;
+// };
+
+/**
+ * @param {string} s
+ * @param {string} t
+ * @return {boolean}
+ */
 var isIsomorphic = function (s, t) {
-  const hash = {};
+  const mapST = new Map();
+  const mapTS = new Map();
 
   for (let i = 0; i < s.length; i++) {
-    if (hash[t[i]] === undefined && !Object.values(hash).includes(s[i])) hash[t[i]] = s[i];
-    else if (hash[t[i]] !== s[i]) return false;
+    if (!mapST.has(s[i]) && !mapTS.has(t[i])) {
+      mapST.set(s[i], t[i]);
+      mapTS.set(t[i], s[i]);
+    } else if (mapST.get(s[i]) === t[i] && mapTS.get(t[i]) === s[i]) {
+      continue;
+    } else {
+      return false;
+    }
   }
 
   return true;
