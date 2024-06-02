@@ -24,21 +24,44 @@ Constraints:
 0 <= k <= 10^5
 */
 
+// var containsNearbyDuplicate = function (nums, k) {
+//   const obj = nums.reduce((acc, num, index) => {
+//     if (Object.hasOwn(acc, num)) acc[num].push(index);
+//     else acc[num] = [index];
+
+//     return acc;
+//   }, {});
+
+//   for (let key in obj) {
+//     if (obj[key].length > 1) {
+//       for (let i = 0; i < obj[key].length - 1; i++) {
+//         for (let j = i + 1; j < obj[key].length; j++) {
+//           if (Math.abs(obj[key][i] - obj[key][j]) <= k) return true;
+//         }
+//       }
+//     }
+//   }
+
+//   return false;
+// };
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {boolean}
+ */
 var containsNearbyDuplicate = function (nums, k) {
-  const obj = nums.reduce((acc, num, index) => {
-    if (Object.hasOwn(acc, num)) acc[num].push(index);
-    else acc[num] = [index];
+  const map = {};
 
-    return acc;
-  }, {});
+  nums.forEach((n, i) => {
+    Object.hasOwn(map, n) ? map[n].push(i) : (map[n] = [i]);
+  });
 
-  for (let key in obj) {
-    if (obj[key].length > 1) {
-      for (let i = 0; i < obj[key].length - 1; i++) {
-        for (let j = i + 1; j < obj[key].length; j++) {
-          if (Math.abs(obj[key][i] - obj[key][j]) <= k) return true;
-        }
-      }
+  for (const p in map) {
+    if (map[p].length < 2) continue;
+
+    for (let i = 1; i < map[p].length; i++) {
+      if (map[p][i] - map[p][i - 1] <= k) return true;
     }
   }
 
