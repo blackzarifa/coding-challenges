@@ -3,14 +3,13 @@
  * @return {number}
  */
 var majorityElement = function (nums) {
-  const map = {};
+  const map = new Map();
 
-  for (num of nums) {
-    if (!map[num]) map[num] = 1;
-    else map[num]++;
+  for (i = 0; i < nums.length; i++) {
+    map.has(nums[i])
+      ? map.set(nums[i], map.get(nums[i]) + 1)
+      : map.set(nums[i], 1);
+
+    if (map.get(nums[i]) > nums.length / 2) return nums[i];
   }
-
-  for (key in map) if (map[key] > nums.length / 2) return key;
-
-  return 0;
 };
