@@ -1,19 +1,26 @@
 /**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
+ * @param {number} target
+ * @param {number[]} nums
+ * @return {number}
  */
+var minSubArrayLen = function (target, nums) {
+  let sum = 0,
+    size = 0,
+    minSize = Infinity;
 
-/**
- * @param {ListNode} head
- * @return {boolean}
- */
-var hasCycle = function (head, set = new Set()) {
-  if (head === null) return false;
-  if (set.has(head)) return true;
+  for (let i = 0; i < nums.length; i++) {
+    sum += nums[i];
+    size++;
 
-  set.add(head);
-  return hasCycle(head.next, set);
+    while (sum >= target) {
+      minSize = Math.min(minSize, size);
+
+      if (minSize === 1) return minSize;
+
+      sum -= nums[i - size + 1];
+      size--;
+    }
+  }
+
+  return minSize === Infinity ? 0 : minSize;
 };
