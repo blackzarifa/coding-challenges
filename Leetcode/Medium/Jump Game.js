@@ -1,17 +1,9 @@
-/**
- * @param {number[]} nums
- * @return {boolean}
- */
 var canJump = function (nums) {
-  if (nums.length === 1) return true;
-
-  let goal = nums.length - 1;
-  let canReachGoal = false;
-
-  for (let i = nums.length - 2; i >= 0; i--) {
-    canReachGoal = i + nums[i] >= goal;
-    if (canReachGoal) goal = i;
+  let max = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (i > max) return false;
+    max = Math.max(max, nums[i] + i);
   }
 
-  return goal === 0;
+  return true;
 };
